@@ -29,12 +29,19 @@ platform="$(uname -s | tr '[:upper:]' '[:lower:]')"
 if [ "$(uname -m)" = "x86_64" ]; then
   arch="amd64"
 else
+  if [ "$platform" = "darwin"]; then
+    if [ "$version" = "1.5" -o "$version" \> "1.5" ]; then
+      echo "goenv: package for i386 was no longer provided from go 1.5"
+      exit 1
+    fi
+  fi
   arch="386"
 fi
 
 if [ "$platform" = "darwin" ]; then
   # Since go version 1.2, osx packages were subdivided into 10.6 and 10.8
-  if [ "$version" = "1.2" -o "$version" \> "1.2" ]; then
+  # From go version 1.5, osx package for 10.6 was no longer released, so extra field is unnecessary
+  if [ "$version" = "1.2" -o "$version" \> "1.2" -a "$version" \< "1.5" ]; then
     if [ "$(uname -r)" \> "12" ]; then
       extra="-osx10.8"
     else
