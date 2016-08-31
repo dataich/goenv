@@ -50,7 +50,7 @@ if [ "$platform" = "darwin" ]; then
   fi
 fi
 
-download="https://storage.googleapis.com/golang/go${version}.${arch}-${extra}.tar.gz"
+download="https://storage.googleapis.com/golang/go${version}.${platform}-${arch}${extra}.tar.gz"
 
 # Can't get too clever here
 set +e
